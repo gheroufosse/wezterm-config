@@ -22,12 +22,23 @@ This fork includes the following customizations optimized for **Belgian AZERTY k
 git clone https://github.com/gheroufosse/wezterm-config.git ~/.config/wezterm
 ```
 
+### Optional Configuration
+
+- **Change default shell**: Edit [`config/launch.lua`](./config/launch.lua) to set your preferred shell
+- **SSH/WSL domains**: Configure custom domains in [`config/domains.lua`](./config/domains.lua)
+
 ### Requirements
 
 - **WezTerm** (Nightly recommended)
   ```bash
   brew install --cask wezterm@nightly
   ```
+
+- **Fish Shell** (configured as default shell)
+  ```bash
+  brew install fish
+  ```
+  > **Note**: This config uses Fish as the default shell. You can change this in [`config/launch.lua`](./config/launch.lua) if you prefer bash, zsh, or another shell.
 
 - **JetBrainsMono Nerd Font**
   ```bash
