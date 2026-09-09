@@ -8,7 +8,7 @@
 
 ## Customizations
 
-This fork includes the following customizations optimized for **Belgian AZERTY keyboard** on **macOS**:
+This fork includes the following customizations optimized for **Belgian AZERTY keyboard**, tested on **macOS** and **Windows (native + WSL)**:
 
 - ✨ **Copy/Paste**: Changed to standard Mac shortcuts (`Cmd+C` / `Cmd+V`)
 - 🔄 **Tab Switching**: Browser-style shortcuts (`Ctrl+Tab` / `Ctrl+Shift+Tab`)
@@ -31,19 +31,35 @@ git clone https://github.com/gheroufosse/wezterm-config.git ~/.config/wezterm
 
 - **WezTerm** (Nightly recommended)
   ```bash
+  # macOS
   brew install --cask wezterm@nightly
+
+  # Windows
+  scoop bucket add extras
+  scoop install wezterm-nightly
   ```
 
-- **Fish Shell** (configured as default shell)
+- **Fish Shell** (default shell on macOS/Linux)
   ```bash
   brew install fish
   ```
-  > **Note**: This config uses Fish as the default shell. You can change this in [`config/launch.lua`](./config/launch.lua) if you prefer bash, zsh, or another shell.
+  > **Note**: This config uses Fish as the default shell on macOS/Linux. On Windows the default is PowerShell Core (`pwsh`) — see [`config/launch.lua`](./config/launch.lua) to change either.
 
 - **JetBrainsMono Nerd Font**
   ```bash
+  # macOS
   brew install --cask font-jetbrains-mono-nerd-font
+
+  # Windows
+  scoop bucket add nerd-fonts
+  scoop install JetBrainsMono-NF
   ```
+
+- **WSL** (Windows only, for the `wsl:ubuntu-*` domains in [`config/domains.lua`](./config/domains.lua))
+  ```powershell
+  wsl --install -d Ubuntu
+  ```
+  > Update the `distribution` field in `config/domains.lua` to match the name shown by `wsl -l -v`.
 
 For more detailed installation instructions, see the [original repository](https://github.com/KevinSilvester/wezterm-config).
 
@@ -57,6 +73,10 @@ Most key bindings use <kbd>SUPER</kbd> and <kbd>SUPER_REV</kbd> (super reversed)
   - <kbd>SUPER</kbd> ⇨ <kbd>Cmd</kbd>
   - <kbd>SUPER_REV</kbd> ⇨ <kbd>Cmd</kbd>+<kbd>Ctrl</kbd>
   - <kbd>LEADER</kbd> ⇨ <kbd>Cmd</kbd>+<kbd>Ctrl</kbd>+<kbd>Space</kbd>
+- On **Windows/Linux**:
+  - <kbd>SUPER</kbd> ⇨ <kbd>Alt</kbd> <sub>(kept off the Windows key to avoid OS shortcut conflicts)</sub>
+  - <kbd>SUPER_REV</kbd> ⇨ <kbd>Alt</kbd>+<kbd>Ctrl</kbd>
+  - <kbd>LEADER</kbd> ⇨ <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>Space</kbd>
 
 ### Miscellaneous/Useful
 

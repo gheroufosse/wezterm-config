@@ -1,6 +1,12 @@
+local platform = require('utils.platform')
+
 ---@type Config
 return {
    -- behaviours
+   -- `wsl:ubuntu-fish` domain is only defined when running native Windows WezTerm
+   -- (see config/domains.lua). Falling back to WezTerm's default local domain
+   -- avoids a startup error when this config is loaded on macOS/Linux/inside WSL itself.
+   default_domain = platform.is_win and 'wsl:ubuntu-fish' or nil,
    automatically_reload_config = true,
    exit_behavior = 'CloseOnCleanExit', -- if the shell program exited with a successful status
    exit_behavior_messaging = 'Verbose',
