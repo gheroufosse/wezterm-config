@@ -83,6 +83,7 @@ local keys = {
    -- window --
    -- window: spawn windows
    { key = 'n',          mods = mod.SUPER,     action = act.SpawnWindow },
+   { key = 'q',          mods = mod.SUPER,     action = act.QuitApplication },
 
    -- window: zoom window
    {
