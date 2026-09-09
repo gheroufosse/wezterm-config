@@ -49,6 +49,9 @@ local keys = {
       }),
    },
 
+   -- newline without submit (e.g. chat/REPL apps like Claude Code) --
+   { key = 'Enter', mods = 'SHIFT', action = act.SendString('\x1b\r') },
+
    -- cursor movement --
    { key = 'LeftArrow',  mods = mod.SUPER,     action = act.SendString('\u{1b}OH') },
    { key = 'RightArrow', mods = mod.SUPER,     action = act.SendString('\u{1b}OF') },
@@ -85,10 +88,14 @@ local keys = {
    { key = 'n',          mods = mod.SUPER,     action = act.SpawnWindow },
    { key = 'q',          mods = mod.SUPER,     action = act.QuitApplication },
 
+   -- font size --
+   { key = '-', mods = mod.SUPER, action = act.DecreaseFontSize },
+   { key = '=', mods = mod.SUPER, action = act.IncreaseFontSize },
+
    -- window: zoom window
    {
       key = '-',
-      mods = mod.SUPER,
+      mods = mod.SUPER_REV,
       action = wezterm.action_callback(function(window, _pane)
          local dimensions = window:get_dimensions()
          -- on Windows 11 (the only OS I'm able to test this on), `is_full_screen` is always false (it's a bug).
@@ -104,7 +111,7 @@ local keys = {
    },
    {
       key = '=',
-      mods = mod.SUPER,
+      mods = mod.SUPER_REV,
       action = wezterm.action_callback(function(window, _pane)
          local dimensions = window:get_dimensions()
          -- on Windows 11 (the only OS I'm able to test this on), `is_full_screen` is always false (it's a bug).
