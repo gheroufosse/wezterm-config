@@ -237,6 +237,13 @@ local keys = {
    },
 }
 
+-- Win/Linux only: free Ctrl+W (no longer deletes word) and move that
+-- readline shortcut to Ctrl+Backspace instead. Left untouched on macOS.
+if not platform.is_mac then
+   table.insert(keys, { key = 'Backspace', mods = 'CTRL', action = act.SendString('\u{17}') })
+   table.insert(keys, { key = 'w', mods = 'CTRL', action = act.DisableDefaultAssignment })
+end
+
 -- stylua: ignore
 ---@type table<string, Key[]>
 local key_tables = {
