@@ -50,7 +50,23 @@ local keys = {
    },
 
    -- newline without submit (e.g. chat/REPL apps like Claude Code) --
-   { key = 'Enter', mods = 'SHIFT', action = act.SendString('\x1b\r') },
+   -- pi's TUI reads raw shift+enter (kitty protocol) or falls back to ctrl+j (LF, 0x0A);
+   -- it does NOT understand the ESC+CR (\x1b\r) hack other REPLs use, so branch on
+   -- foreground process name. Works the same on macOS/Windows/Linux (incl. WSL).
+   {
+      key = 'Enter',
+      mods = 'SHIFT',
+      action = wezterm.action_callback(function(window, pane)
+         local proc = pane:get_foreground_process_name() or ''
+         local info = pane.get_foreground_process_info and pane:get_foreground_process_info()
+         local argv0 = info and info.argv and info.argv[1] or ''
+         if argv0 == 'pi' or argv0:match('[/\\]pi$') then
+            window:perform_action(act.SendString('\n'), pane)
+         else
+            window:perform_action(act.SendString('\x1b\r'), pane)
+         end
+      end),
+   },
 
    -- cursor movement --
    { key = 'LeftArrow',  mods = mod.SUPER,     action = act.SendString('\u{1b}OH') },
