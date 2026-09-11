@@ -73,11 +73,6 @@ local keys = {
    { key = 'RightArrow', mods = mod.SUPER,     action = act.SendString('\u{1b}OF') },
    { key = 'Backspace',  mods = mod.SUPER,     action = act.SendString('\u{15}') },
 
-   -- macOS Option+N is normally a dead key for tilde composition, but
-   -- disable_default_key_bindings=true below also swallows dead-key
-   -- passthrough, so bind it explicitly to just send a literal '~'.
-   { key = 'n', mods = 'ALT', action = act.SendString('~') },
-
    -- copy/paste --
    { key = 'c',          mods = mod.SUPER,     action = act.CopyTo('Clipboard') },
    { key = 'v',          mods = mod.SUPER,     action = act.PasteFrom('Clipboard') },
@@ -263,6 +258,15 @@ local keys = {
 if not platform.is_mac then
    table.insert(keys, { key = 'Backspace', mods = 'CTRL', action = act.SendString('\u{17}') })
    table.insert(keys, { key = 'w', mods = 'CTRL', action = act.DisableDefaultAssignment })
+end
+
+-- macOS only: Option+N is normally a dead key for tilde composition, but
+-- disable_default_key_bindings=true above also swallows dead-key
+-- passthrough, so bind it explicitly to just send a literal '~'. On
+-- Win/Linux, ALT is already mod.SUPER (see top of file), so this would
+-- collide with SUPER bindings there and isn't needed anyway.
+if platform.is_mac then
+   table.insert(keys, { key = 'n', mods = 'ALT', action = act.SendString('~') })
 end
 
 -- stylua: ignore
