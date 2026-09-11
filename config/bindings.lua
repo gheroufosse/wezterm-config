@@ -260,13 +260,20 @@ if not platform.is_mac then
    table.insert(keys, { key = 'w', mods = 'CTRL', action = act.DisableDefaultAssignment })
 end
 
--- macOS only: Option+N is normally a dead key for tilde composition, but
--- disable_default_key_bindings=true above also swallows dead-key
--- passthrough, so bind it explicitly to just send a literal '~'. On
--- Win/Linux, ALT is already mod.SUPER (see top of file), so this would
--- collide with SUPER bindings there and isn't needed anyway.
+-- Tilde: disable_default_key_bindings=true above swallows dead-key
+-- passthrough, so the layout's composing tilde never reaches the terminal.
+-- Bind it explicitly to send a literal '~' on both platforms, using the
+-- modifier that is actually free on each:
+--   macOS    Option+N is the native (dead-key) tilde, so keep that muscle memory.
+--   Win/WSL  ALT is already mod.SUPER (see top of file) and AltGr+= is dead,
+--            so use Ctrl+N instead.
+-- Trade-off: this is a plain literal, not a composing dead key, so accented
+-- forms (ñ, ã) are no longer typeable this way. Ctrl+N also shadows
+-- readline/fish history-next, which stays available as Down.
 if platform.is_mac then
    table.insert(keys, { key = 'n', mods = 'ALT', action = act.SendString('~') })
+else
+   table.insert(keys, { key = 'n', mods = 'CTRL', action = act.SendString('~') })
 end
 
 -- stylua: ignore
