@@ -73,6 +73,11 @@ local keys = {
    { key = 'RightArrow', mods = mod.SUPER,     action = act.SendString('\u{1b}OF') },
    { key = 'Backspace',  mods = mod.SUPER,     action = act.SendString('\u{15}') },
 
+   -- macOS Option+N is normally a dead key for tilde composition, but
+   -- disable_default_key_bindings=true below also swallows dead-key
+   -- passthrough, so bind it explicitly to just send a literal '~'.
+   { key = 'n', mods = 'ALT', action = act.SendString('~') },
+
    -- copy/paste --
    { key = 'c',          mods = mod.SUPER,     action = act.CopyTo('Clipboard') },
    { key = 'v',          mods = mod.SUPER,     action = act.PasteFrom('Clipboard') },
