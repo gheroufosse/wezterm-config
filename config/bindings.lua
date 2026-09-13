@@ -276,6 +276,21 @@ else
    table.insert(keys, { key = 'n', mods = 'CTRL', action = act.SendString('~') })
 end
 
+-- Backslash: same disable_default_key_bindings issue as tilde above — '\'
+-- key is only ever bound as a physical key (pane split shortcuts), never as
+-- a literal char to send. On layouts without a direct backslash key
+-- (e.g. Belgian/French AZERTY on Mac), nothing produces it.
+--   macOS  Shift+Option+: (free combo, mirrors the AZERTY habit of
+--          Option+Shift+: as backslash on stock macOS bindings).
+--   WSL    Alt+\ and Alt+Ctrl+\ are both taken (pane split via mod.SUPER /
+--          mod.SUPER_REV), so use Ctrl+Shift+\ instead — free, and mirrors
+--          the common Linux terminal convention for AltGr-less backslash.
+if platform.is_mac then
+   table.insert(keys, { key = ':', mods = 'SHIFT|ALT', action = act.SendString('\\') })
+else
+   table.insert(keys, { key = '\\', mods = 'CTRL|SHIFT', action = act.SendString('\\') })
+end
+
 -- stylua: ignore
 ---@type table<string, Key[]>
 local key_tables = {
