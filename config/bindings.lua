@@ -289,13 +289,18 @@ end
 --          Shift+Option+this-key never actually produces a literal ':'
 --          keysym for wezterm to match. `phys:Period` matches the raw
 --          physical key regardless of what glyph Option would compose.
---   WSL    Alt+\ and Alt+Ctrl+\ are both taken (pane split via mod.SUPER /
---          mod.SUPER_REV), so use Ctrl+Shift+\ instead — free, and mirrors
---          the common Linux terminal convention for AltGr-less backslash.
+--   WSL    Same mapped-char trap applies here too: Shift held means the OS
+--          reports '|' (the shifted glyph), not '\', so key='\\' would
+--          never match with SHIFT in mods. On Belgian/French AZERTY,
+--          backslash also needs AltGr (a compose modifier, same issue as
+--          Option on macOS). Alt+\ and Alt+Ctrl+\ are both already taken
+--          (pane split via mod.SUPER / mod.SUPER_REV), so use
+--          phys:Backslash with Ctrl+Shift instead — free, and matches the
+--          physical key regardless of what glyph any modifier composes.
 if platform.is_mac then
    table.insert(keys, { key = 'phys:Period', mods = 'SHIFT|ALT', action = act.SendString('\\') })
 else
-   table.insert(keys, { key = '\\', mods = 'CTRL|SHIFT', action = act.SendString('\\') })
+   table.insert(keys, { key = 'phys:Backslash', mods = 'CTRL|SHIFT', action = act.SendString('\\') })
 end
 
 -- stylua: ignore
