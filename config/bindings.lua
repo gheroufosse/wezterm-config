@@ -276,6 +276,12 @@ else
    table.insert(keys, { key = 'n', mods = 'CTRL', action = act.SendString('~') })
 end
 
+-- Cmd+Z undo (macOS): send Ctrl+_ (0x1F). pi decodes it as ctrl+- (editor
+-- undo); fish/zsh/readline also treat it as undo.
+if platform.is_mac then
+   table.insert(keys, { key = 'z', mods = 'SUPER', action = act.SendString('\x1f') })
+end
+
 -- Backslash: same disable_default_key_bindings issue as tilde above — '\'
 -- key is only ever bound as a physical key (pane split shortcuts), never as
 -- a literal char to send. On layouts without a direct backslash key
